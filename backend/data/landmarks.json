@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Tiruchirappalli Junction Railway Station",
+    "aliases": ["Trichy Junction", "Trichy Railway Station", "TPJ", "திருச்சி சந்திப்பு", "திருச்சி ரயில் நிலையம்", "त्रिची जंक्शन"],
+    "lat": 10.7952,
+    "lng": 78.6853,
+    "verify": true
+  },
+  {
+    "name": "Central Bus Stand",
+    "aliases": ["Central Bus Station", "Cantonment Bus Stand", "மத்திய பேருந்து நிலையம்", "सेंट्रल बस स्टैंड"],
+    "lat": 10.8038,
+    "lng": 78.6865,
+    "verify": true
+  },
+  {
+    "name": "Chattiram Bus Stand",
+    "aliases": ["Chathiram Bus Stand", "North Bus Stand", "சத்திரம் பேருந்து நிலையம்", "छत्रम बस स्टैंड"],
+    "lat": 10.8354,
+    "lng": 78.6942,
+    "verify": true
+  },
+  {
+    "name": "Rockfort Ucchi Pillayar Temple",
+    "aliases": ["Rockfort", "Malaikottai", "Ucchi Pillayar Kovil", "மலைக்கோட்டை", "உச்சிப் பிள்ளையார் கோவில்", "रॉकफोर्ट मंदिर"],
+    "lat": 10.8272,
+    "lng": 78.6970,
+    "verify": true
+  },
+  {
+    "name": "Sri Ranganathaswamy Temple Srirangam",
+    "aliases": ["Srirangam Temple", "Rajagopuram", "ஸ்ரீரங்கம் கோவில்", "ரங்கநாதர் கோவில்", "श्री रंगनाथस्वामी मंदिर"],
+    "lat": 10.8624,
+    "lng": 78.6901,
+    "verify": true
+  },
+  {
+    "name": "Thiruvanaikaval Jambukeswarar Temple",
+    "aliases": ["Thiruvanaikoil", "Jambukeswarar Kovil", "திருவானைக்காவல்", "ஜம்புகேஸ்வரர் கோவில்", "तिरुवानैकावल मंदिर"],
+    "lat": 10.8533,
+    "lng": 78.7056,
+    "verify": true
+  },
+  {
+    "name": "Mahatma Gandhi Memorial Government Hospital",
+    "aliases": ["Govt Hospital Trichy", "GH", "MGMGH", "அரசு தலைமை மருத்துவமனை", "सरकारी अस्पताल त्रिची"],
+    "lat": 10.8165,
+    "lng": 78.6872,
+    "verify": true
+  },
+  {
+    "name": "Tiruchirappalli International Airport",
+    "aliases": ["Trichy Airport", "TRZ", "திருச்சி விமான நிலையம்", "त्रिची हवाई अड्डा"],
+    "lat": 10.7654,
+    "lng": 78.7097,
+    "verify": true
+  },
+  {
+    "name": "Main Guard Gate",
+    "aliases": ["Mainguard Gate", "Teppakulam Bazaar Gate", "மெயின் கார்ட் கேட்", "मेन गार्ड गेट"],
+    "lat": 10.8302,
+    "lng": 78.6946,
+    "verify": true
+  },
+  {
+    "name": "Gandhi Market",
+    "aliases": ["Trichy Gandhi Market", "காந்தி மார்க்கெட்", "गांधी मार्केट"],
+    "lat": 10.8211,
+    "lng": 78.7018,
+    "verify": true
+  },
+  {
+    "name": "Thillai Nagar Main Road",
+    "aliases": ["Thillai Nagar", "தில்லை நகர்", "थिल्लई नगर"],
+    "lat": 10.8295,
+    "lng": 78.6835,
+    "verify": true
+  },
+  {
+    "name": "St. Joseph's College",
+    "aliases": ["St Josephs College Trichy", "புனித ஜோசப் கல்லூரி", "सेंट जोसेफ कॉलेज"],
+    "lat": 10.8331,
+    "lng": 78.6917,
+    "verify": true
+  },
+  {
+    "name": "National College",
+    "aliases": ["National College Trichy", "தேசிய கல்லூரி", "नेशनल कॉलेज"],
+    "lat": 10.8118,
+    "lng": 78.6749,
+    "verify": true
+  },
+  {
+    "name": "Kauvery Hospital Tennur",
+    "aliases": ["Tennur Kauvery", "காவேரி மருத்துவமனை தென்னூர்", "कावेरी अस्पताल"],
+    "lat": 10.8223,
+    "lng": 78.6845,
+    "verify": true
+  },
+  {
+    "name": "Tiruchirappalli District Court",
+    "aliases": ["Trichy Court Complex", "Cantonment Court", "மாவட்ட நீதிமன்றம்", "जिला अदालत"],
+    "lat": 10.8085,
+    "lng": 78.6877,
+    "verify": true
+  },
+  {
+    "name": "Golden Rock Railway Workshop",
+    "aliases": ["Ponmalai Workshop", "பொன்மலை பணிமனை", "गोल्डन रॉक वर्कशॉप"],
+    "lat": 10.7892,
+    "lng": 78.7214,
+    "verify": true
+  },
+  {
+    "name": "National Institute of Technology Tiruchirappalli (NITT)",
+    "aliases": ["NIT Trichy", "REC Trichy", "என்.ஐ.டி திருச்சி", "एनआईटी त्रिची"],
+    "lat": 10.7589,
+    "lng": 78.8132,
+    "verify": true
+  },
+  {
+    "name": "K.K. Nagar Bus Terminus",
+    "aliases": ["KK Nagar", "Kalaignar Karunanidhi Nagar", "கே.கே. நகர்", "केके नगर"],
+    "lat": 10.7728,
+    "lng": 78.7126,
+    "verify": true
+  },
+  {
+    "name": "Palakkarai Railway Station",
+    "aliases": ["Palakarai", "பாலக்கரை", "पालक्करै"],
+    "lat": 10.8143,
+    "lng": 78.6948,
+    "verify": true
+  },
+  {
+    "name": "Cauvery Bridge (Old Bridge)",
+    "aliases": ["Kaveri Bridge", "Mambazhasalai Bridge", "காவிரி பாலம்", "कावेरी ब्रिज"],
+    "lat": 10.8465,
+    "lng": 78.6975,
+    "verify": true
+  }
+]

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crisis Command — Emergency Coordination Console</title>
+
+  <!-- Leaflet CSS (1.9.4 CDN) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <!-- Custom Control Room Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Operational Control Bar -->
+  <header id="top-bar">
+    <div class="brand">
+      <span class="brand-title">CRISIS COMMAND</span>
+      <span class="brand-tag">Tiruchirappalli Dispatch</span>
+    </div>
+
+    <div class="actions-group">
+      <button id="btn-load-demo" class="btn btn-secondary">Load Demo</button>
+      <button id="btn-replan" class="btn btn-primary">Force Replan</button>
+      <button id="btn-reset" class="btn btn-danger">Reset</button>
+      
+      <div class="divider"></div>
+
+      <button id="btn-toggle-coverage" class="btn btn-toggle" data-active="true">Coverage: ON</button>
+      <button id="btn-toggle-ghost" class="btn btn-toggle" data-active="true">Ghost Plan: ON</button>
+      <button id="btn-draw-hazard" class="btn btn-toggle" data-active="false">Draw Hazard</button>
+      <button id="btn-add-incident-map" class="btn btn-toggle" data-active="false">Add Incident (Click)</button>
+
+      <div class="divider"></div>
+
+      <button id="btn-export-sitrep" class="btn btn-highlight">Export SitRep</button>
+    </div>
+  </header>
+
+  <!-- Main Viewport Layout -->
+  <div id="workspace">
+
+    <!-- Left Panel: Multimodal Intake & Confirmation -->
+    <aside id="left-panel" class="panel">
+      <div class="panel-header">
+        <h2>Incident Intake</h2>
+        <span class="status-indicator live">LIVE</span>
+      </div>
+
+      <div class="panel-content">
+        <form id="intake-form" class="intake-box">
+          <label for="intake-text">Report Ingestion (Text or Voice)</label>
+          <div class="input-row">
+            <textarea id="intake-text" rows="3" placeholder="Paste or type dispatch report (e.g., 'Head-on collision near Cantonment Central Bus Stand with 2 people trapped')..."></textarea>
+            <button type="button" id="mic-btn" class="mic-button" title="Record Audio Dispatch">
+              <svg id="mic-icon" viewBox="0 0 24 24" width="22" height="22">
+                <path fill="currentColor" d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+                <path fill="currentColor" d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="button-row">
+            <button type="submit" id="btn-submit-text" class="btn btn-primary full-width">Process Report</button>
+          </div>
+        </form>
+
+        <!-- Extraction Confirmation Card (Populated when confidence < 0.7 or coords missing) -->
+        <div id="confirm-card" class="card confirm-card hidden">
+          <div class="card-header highlight">
+            <h3>Human Confirmation Required</h3>
+            <span id="confirm-confidence" class="badge">Confidence: --%</span>
+          </div>
+          <p class="instruction-text">Review and verify model extraction before committing:</p>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="cf-type">Incident Type</label>
+              <select id="cf-type">
+                <option value="cardiac_arrest">Cardiac Arrest</option>
+                <option value="major_trauma">Major Trauma</option>
+                <option value="fire">Fire</option>
+                <option value="building_collapse">Building Collapse</option>
+                <option value="evacuation">Evacuation</option>
+                <option value="minor_injury">Minor Injury</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="cf-severity">Severity (1 - 5)</label>
+              <input type="number" id="cf-severity" min="1" max="5" value="3">
+            </div>
+
+            <div class="form-group">
+              <label for="cf-people">People Affected</label>
+              <input type="number" id="cf-people" min="0" value="1">
+            </div>
+
+            <div class="form-group full-col">
+              <label for="cf-location">Location Landmark / Text</label>
+              <input type="text" id="cf-location">
+            </div>
+
+            <div class="form-group">
+              <label for="cf-lat">Latitude</label>
+              <input type="number" id="cf-lat" step="0.0001">
+            </div>
+
+            <div class="form-group">
+              <label for="cf-lng">Longitude</label>
+              <input type="number" id="cf-lng" step="0.0001">
+            </div>
+          </div>
+
+          <div class="card-actions">
+            <button id="btn-cancel-confirm" class="btn btn-secondary">Discard</button>
+            <button id="btn-commit-confirm" class="btn btn-highlight">Confirm & Dispatch</button>
+          </div>
+        </div>
+
+        <!-- Proactive Staging Advice Module -->
+        <div id="staging-box" class="card staging-card hidden">
+          <div class="card-header">
+            <h3>Staging Advisory</h3>
+          </div>
+          <div id="staging-content"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center View: Full-height Leaflet Map Canvas -->
+    <main id="map-container">
+      <div id="map"></div>
+    </main>
+
+    <!-- Right Panel: Operations, Reasoning & Deficits -->
+    <aside id="right-panel" class="panel">
+      <!-- Agent Activity Feed -->
+      <section class="sub-panel">
+        <div class="panel-header">
+          <h2>Agent Activity Feed</h2>
+          <span id="agent-pulse" class="pulse-indicator"></span>
+        </div>
+        <div id="event-feed" class="event-feed-list"></div>
+      </section>
+
+      <!-- Plan Reasoning Cards -->
+      <section class="sub-panel flex-grow">
+        <div class="panel-header">
+          <h2>Plan Reasoning Cards</h2>
+          <span id="plan-version-badge" class="badge">v0</span>
+        </div>
+        <div id="reasoning-cards" class="cards-container">
+          <div class="empty-state">Awaiting plan execution...</div>
+        </div>
+      </section>
+
+      <!-- Uncovered Incident Deficits -->
+      <section class="sub-panel deficit-panel">
+        <div class="panel-header danger">
+          <h2>Uncovered Resource Gaps</h2>
+          <span id="deficit-count" class="badge badge-danger">0</span>
+        </div>
+        <div id="uncovered-list" class="uncovered-container">
+          <div class="empty-state-success">All active incident demand satisfied.</div>
+        </div>
+      </section>
+    </aside>
+
+  </div>
+
+  <!-- High-Stakes Human Approval Modal -->
+  <div id="approval-modal" class="modal-backdrop hidden">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="alert-icon">⚠️</div>
+        <div>
+          <h2>Dispatcher Sign-Off Required</h2>
+          <p id="modal-subtitle">High-risk reallocation detected. Operational approval required.</p>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div id="modal-flags-list" class="flags-alert-box"></div>
+        
+        <h3>Proposed Plan Divergence</h3>
+        <div id="modal-diff-summary" class="diff-summary-box"></div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btn-modal-reject" class="btn btn-danger">Reject & Keep Units (Safe Solve)</button>
+        <button id="btn-modal-approve" class="btn btn-highlight">Approve Diversion Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Area -->
+  <div id="toast-container" class="toast-area"></div>
+
+  <!-- Load Scripts at end of body -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

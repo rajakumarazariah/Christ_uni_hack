@@ -1,0 +1,208 @@
+{
+  "units": [
+    {
+      "id": "AMB-1",
+      "type": "ambulance",
+      "name": "Cantonment ALS Unit 1",
+      "lat": 10.8035,
+      "lng": 78.6885,
+      "home_lat": 10.8035,
+      "home_lng": 78.6885,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "AMB-2",
+      "type": "ambulance",
+      "name": "Thillai Nagar Response 2",
+      "lat": 10.8290,
+      "lng": 78.6830,
+      "home_lat": 10.8290,
+      "home_lng": 78.6830,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "AMB-3",
+      "type": "ambulance",
+      "name": "Srirangam Temple Post 3",
+      "lat": 10.8620,
+      "lng": 78.6920,
+      "home_lat": 10.8620,
+      "home_lng": 78.6920,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "AMB-4",
+      "type": "ambulance",
+      "name": "K.K. Nagar Station 4",
+      "lat": 10.7725,
+      "lng": 78.7120,
+      "home_lat": 10.7725,
+      "home_lng": 78.7120,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "AMB-5",
+      "type": "ambulance",
+      "name": "Golden Rock Railway Unit 5",
+      "lat": 10.7890,
+      "lng": 78.7210,
+      "home_lat": 10.7890,
+      "home_lng": 78.7210,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "AMB-6",
+      "type": "ambulance",
+      "name": "Thuvakudi Outpost 6",
+      "lat": 10.7580,
+      "lng": 78.7950,
+      "home_lat": 10.7580,
+      "home_lng": 78.7950,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "RES-1",
+      "type": "rescue_team",
+      "name": "Central Fire & Rescue Brigade",
+      "lat": 10.8120,
+      "lng": 78.6905,
+      "home_lat": 10.8120,
+      "home_lng": 78.6905,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "RES-2",
+      "type": "rescue_team",
+      "name": "North Riverfront SAR Squad",
+      "lat": 10.8540,
+      "lng": 78.6980,
+      "home_lat": 10.8540,
+      "home_lng": 78.6980,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "RES-3",
+      "type": "rescue_team",
+      "name": "Industrial Estate Extrication Unit",
+      "lat": 10.7760,
+      "lng": 78.7450,
+      "home_lat": 10.7760,
+      "home_lng": 78.7450,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "MED-1",
+      "type": "medical_unit",
+      "name": "Mobile Triage Field Team A",
+      "lat": 10.8220,
+      "lng": 78.6850,
+      "home_lat": 10.8220,
+      "home_lng": 78.6850,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    },
+    {
+      "id": "MED-2",
+      "type": "medical_unit",
+      "name": "Disaster Medical Unit B",
+      "lat": 10.7960,
+      "lng": 78.7050,
+      "home_lat": 10.7960,
+      "home_lng": 78.7050,
+      "status": "available",
+      "assigned_incident_id": null,
+      "verify": true
+    }
+  ],
+  "facilities": [
+    {
+      "id": "FAC-H1",
+      "kind": "hospital",
+      "name": "Mahatma Gandhi Memorial Govt Hospital (MGMGH)",
+      "lat": 10.8165,
+      "lng": 78.6872,
+      "capacity": 120,
+      "occupied": 42,
+      "verify": true
+    },
+    {
+      "id": "FAC-H2",
+      "kind": "hospital",
+      "name": "KMC Speciality Hospital",
+      "lat": 10.8258,
+      "lng": 78.6881,
+      "capacity": 55,
+      "occupied": 18,
+      "verify": true
+    },
+    {
+      "id": "FAC-H3",
+      "kind": "hospital",
+      "name": "Apollo Speciality Hospital Ariyamangalam",
+      "lat": 10.7932,
+      "lng": 78.7305,
+      "capacity": 70,
+      "occupied": 25,
+      "verify": true
+    },
+    {
+      "id": "FAC-H4",
+      "kind": "hospital",
+      "name": "Kauvery Hospital Tennur",
+      "lat": 10.8223,
+      "lng": 78.6845,
+      "capacity": 65,
+      "occupied": 30,
+      "verify": true
+    },
+    {
+      "id": "FAC-S1",
+      "kind": "shelter",
+      "name": "Anna Stadium Indoor Complex",
+      "lat": 10.8062,
+      "lng": 78.6948,
+      "capacity": 450,
+      "occupied": 0,
+      "verify": true
+    },
+    {
+      "id": "FAC-S2",
+      "kind": "shelter",
+      "name": "Srirangam Yatri Nivas Community Hall",
+      "lat": 10.8655,
+      "lng": 78.6895,
+      "capacity": 300,
+      "occupied": 0,
+      "verify": true
+    },
+    {
+      "id": "FAC-S3",
+      "kind": "shelter",
+      "name": "K.K. Nagar Community Welfare Centre",
+      "lat": 10.7710,
+      "lng": 78.7155,
+      "capacity": 200,
+      "occupied": 0,
+      "verify": true
+    }
+  ]
+}
