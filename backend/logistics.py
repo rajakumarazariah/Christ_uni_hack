@@ -354,6 +354,27 @@ def pick_destination(
     )
     return candidates[0]
 
+async def fetch_street_route(lat1: float, lng1: float, lat2: float, lng2: float) -> list[list[float]]:
+    """Fetches real road waypoints [[lat, lng], ...] from OSRM, falling back to a straight line."""
+    if not settings.use_osrm:
+        return [[lat1, lng1], [lat2, lng2]]
+
+    url = f"{settings.osrm_base_url}/route/v1/driving/{lng1:.6f},{lat1:.6f};{lng2:.6f},{lat2:.6f}?overview=full&geometries=geojson"
+    try:
+        async with httpx.AsyncClient(timeout=3.0) as client:
+            resp = await client.get(url)
+            if resp.status_code == 200:
+                data = resp.json()
+                routes = data.get("routes", [])
+                if routes:
+                    # GeoJSON is [lng, lat], convert to Leaflet's expected [lat, lng]
+                    coords = routes[0]["geometry"]["coordinates"]
+                    return [[pt[1], pt[0]] for pt in coords]
+    except Exception:
+        pass
+
+    return [[lat1, lng1], [lat2, lng2]]
+
 
 # ---------------------------------------------------------------------------
 # Standalone Verification Demo

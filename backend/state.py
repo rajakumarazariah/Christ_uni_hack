@@ -131,6 +131,7 @@ class Assignment(BaseModel):
     incident_id: str
     eta_min: float
     harm: float
+    route_geometry: list[list[float]] = Field(default_factory=list)  # [[lat, lng], ...]
 
 
 class Uncovered(BaseModel):

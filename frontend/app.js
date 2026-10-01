@@ -527,10 +527,14 @@ function renderActiveRoutes(plan, units, incidents) {
     const inc = incMap[assign.incident_id];
     if (!u || !inc) return;
 
-    // Draw solid bold primary dispatch route
-    const polyline = L.polyline([[u.lat, u.lng], [inc.lat, inc.lng]], {
+    // Use OSRM road geometry if present, otherwise fall back to straight line
+    const pathCoords = (assign.route_geometry && assign.route_geometry.length > 0)
+      ? assign.route_geometry
+      : [[u.lat, u.lng], [inc.lat, inc.lng]];
+
+    const polyline = L.polyline(pathCoords, {
       color: '#29b6f6',
-      weight: 3.5,
+      weight: 4,
       opacity: 0.85
     });
 
@@ -540,9 +544,8 @@ function renderActiveRoutes(plan, units, incidents) {
     });
     APP_STATE.layers.routes.addLayer(polyline);
 
-    // Trigger unit animation if en_route
     if (u.status === 'en_route') {
-      startUnitMovementAnimation(u, inc, assign.eta_min);
+      startUnitStreetAnimation(u, inc, pathCoords, assign.eta_min);
     }
   });
 }
@@ -603,33 +606,36 @@ function renderCoverage(coverage) {
 // ---------------------------------------------------------------------------
 // Unit Movement Simulation & Arrival Dispatch
 // ---------------------------------------------------------------------------
-function startUnitMovementAnimation(unit, incident, etaMinutes) {
-  // Prevent duplicate animation threads
-  if (APP_STATE.animations[unit.id]) return;
+function startUnitStreetAnimation(unit, incident, waypoints, etaMinutes) {
+  if (APP_STATE.animations[unit.id] || waypoints.length < 2) return;
 
-  // Duration in ms: (eta_min / SIM_SPEED) * 60 * 1000
   const durationMs = Math.max(3000, (etaMinutes / APP_STATE.simSpeed) * 60 * 1000);
   const startTime = performance.now();
-  const startLat = unit.lat;
-  const startLng = unit.lng;
-  const targetLat = incident.lat;
-  const targetLng = incident.lng;
 
   function step(currentTime) {
     const elapsed = currentTime - startTime;
     const progress = Math.min(1.0, elapsed / durationMs);
 
-    // Linear interpolation of coordinates
-    unit.lat = startLat + (targetLat - startLat) * progress;
-    unit.lng = startLng + (targetLng - startLng) * progress;
+    // Map progress (0 to 1) to segment index along road waypoints
+    const totalSegments = waypoints.length - 1;
+    const exactIndex = progress * totalSegments;
+    const idx = Math.min(Math.floor(exactIndex), totalSegments - 1);
+    const segmentProgress = exactIndex - idx;
+
+    const p1 = waypoints[idx];
+    const p2 = waypoints[idx + 1];
+
+    unit.lat = p1[0] + (p2[0] - p1[0]) * segmentProgress;
+    unit.lng = p1[1] + (p2[1] - p1[1]) * segmentProgress;
+
+    renderUnits(APP_STATE.store.units);
 
     if (progress < 1.0) {
       APP_STATE.animations[unit.id] = requestAnimationFrame(step);
     } else {
-      // Arrival complete
       delete APP_STATE.animations[unit.id];
       apiPost(`/api/units/${unit.id}/arrived`).then(() => {
-        showToast(`${unit.name} has ARRIVED at ${incident.id}.`);
+        showToast(`${unit.name} has arrived at ${incident.id}.`);
       });
     }
   }

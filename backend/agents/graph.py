@@ -16,6 +16,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import END, StateGraph
 from langgraph.types import Command, interrupt
 
+from backend.logistics import fetch_street_route
 from backend.agents.command import evaluate_command_plan
 from backend.agents.intake import extract
 from backend.config import Settings, settings
@@ -165,10 +166,17 @@ async def solver_node(state: AgentWorkflowState) -> Dict[str, Any]:
     plan.trigger = trigger.get("kind", "manual")
     store.pending_plan = plan
 
+    for assign in plan.assignments:
+        unit = next((u for u in units if u.id == assign.unit_id), None)
+        inc = next((i for i in incidents if i.id == assign.incident_id), None)
+        if unit and inc:
+            assign.route_geometry = await fetch_street_route(unit.lat, unit.lng, inc.lat, inc.lng)
+
     return {
         "proposed_plan": plan,
         "plan_id": plan.id,
     }
+
 
 
 async def command_node(state: AgentWorkflowState) -> Dict[str, Any]:
